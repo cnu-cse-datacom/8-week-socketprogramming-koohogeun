@@ -1,6 +1,8 @@
 import socket
 import os
 import hashlib
+if not os.path.isdir('received_data'):
+	os.mkdir('received_data')
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_socket.bind(('',9000))
 data, addr = server_socket.recvfrom(2000)
@@ -14,7 +16,7 @@ server_socket.sendto("size_received".encode(), addr)
 file_size = int(data)
 print('File Size : %d'%(file_size))
 acc = 0;
-with open(file_name, 'wb') as f:
+with open('./received_data/' + file_name, 'wb') as f:
 	while True:
 		data = server_socket.recv(1024)
 		if not data:
